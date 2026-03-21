@@ -1,0 +1,15 @@
+name: purethic-audit-pipeline
+description: Pipeline sequencial de auditoria e rebranding para Purethic Lab
+steps:
+  - squads/purethic-audit/pipeline/steps/step-01-auditor.md
+  - squads/purethic-audit/pipeline/steps/step-02-copy.md
+  - squads/purethic-audit/pipeline/steps/step-03-seo.md
+  - squads/purethic-audit/pipeline/steps/step-04-pesquisador.md
+  - squads/purethic-audit/pipeline/steps/step-05-marketing.md
+  - squads/purethic-audit/pipeline/steps/step-06-criativo.md
+  - squads/purethic-audit/pipeline/steps/step-07-revisor.md
+checkpoints:
+  - step-01-auditor
+  - step-03-seo
+  - step-05-marketing
+  - step-06-criativo

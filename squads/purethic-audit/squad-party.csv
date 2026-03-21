@@ -1,0 +1,8 @@
+id,name,title,icon,path
+squads/purethic-audit/agents/auditor,Alana,Auditor Geral,🕵️‍♂️,./agents/auditor.agent.md
+squads/purethic-audit/agents/copywriter,Camila,Especialista de Copy,✍️,./agents/copywriter.agent.md
+squads/purethic-audit/agents/seo,Sabrina,Especialista de SEO,🔍,./agents/seo.agent.md
+squads/purethic-audit/agents/pesquisador,Tayla,Pesquisador de Tendências,🔬,./agents/pesquisador.agent.md
+squads/purethic-audit/agents/marketing,Milena,Estrategista de Marketing,📈,./agents/marketing.agent.md
+squads/purethic-audit/agents/criativo,Carol,Diretor Criativo,🎨,./agents/criativo.agent.md
+squads/purethic-audit/agents/revisor,Raquel,Revisor e Priorizador,📋,./agents/revisor.agent.md

@@ -1,0 +1,10 @@
+name: purethic-audit
+description: Squad completo para auditar a loja Purethic Lab (Reino Unido) e gerar insights críticos, textos e imagens adaptadas ao mercado "Clean Beauty".
+icon: ✨
+mode: Alta Performance
+data:
+  - squads/purethic-audit/pipeline/data/research-brief.md
+  - squads/purethic-audit/pipeline/data/quality-criteria.md
+skills:
+  - web_search
+  - web_fetch
