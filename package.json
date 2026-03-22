@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@wix/sdk": "^1.21.5",
+    "@wix/stores": "^1.0.723",
     "playwright": "^1.58.2"
   }
 }
