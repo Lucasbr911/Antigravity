@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1080px;
+      height: 1080px;
+      overflow: hidden;
+      background: #FAFAF8;
+      font-family: 'Inter', sans-serif;
+      position: relative;
+    }
+
+    /* Background */
+    .bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, #B2AC88 0%, #9E9B7A 40%, #8A8770 100%);
+    }
+
+    /* Ambient light blobs */
+    .light-blob-1 {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 65% 35% 55% 45% / 45% 55% 45% 55%;
+      background: rgba(255, 255, 240, 0.12);
+      top: -120px;
+      right: -100px;
+    }
+
+    .light-blob-2 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 35% 65% 40% 60% / 60% 40% 60% 40%;
+      background: rgba(250, 218, 221, 0.1);
+      bottom: -50px;
+      left: -60px;
+    }
+
+    /* Device representation */
+    .device-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -52%);
+    }
+
+    /* The device body */
+    .device-body {
+      width: 140px;
+      height: 440px;
+      border-radius: 70px;
+      background: linear-gradient(160deg, #FFFFF0 0%, #F0EDD8 40%, #E8E4CC 100%);
+      box-shadow:
+        20px 30px 80px rgba(0,0,0,0.25),
+        -8px -8px 20px rgba(255,255,255,0.15),
+        inset 0 2px 8px rgba(255,255,255,0.5),
+        inset 0 -2px 8px rgba(0,0,0,0.08);
+      position: relative;
+      transform: rotate(-20deg);
+    }
+
+    .device-button {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FFFFF0, #E8E4CC);
+      border: 2px solid rgba(178, 172, 136, 0.4);
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow:
+        0 4px 16px rgba(0,0,0,0.12),
+        inset 0 2px 4px rgba(255,255,255,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .device-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: #B2AC88;
+    }
+
+    .device-screen {
+      position: absolute;
+      width: 90px;
+      height: 220px;
+      border-radius: 45px;
+      background: linear-gradient(180deg, #B2AC88 0%, #9E9B7A 100%);
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      overflow: hidden;
+    }
+
+    .screen-glow {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(255,255,240, 0.4);
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      filter: blur(12px);
+    }
+
+    /* Hand representation */
+    .hand-wrap {
+      position: absolute;
+      bottom: -120px;
+      left: -30px;
+      width: 220px;
+      height: 300px;
+    }
+
+    .hand-shape {
+      width: 200px;
+      height: 260px;
+      border-radius: 60% 40% 45% 55% / 55% 45% 55% 45%;
+      background: linear-gradient(160deg, #F5DEC8 0%, #EDD4B8 100%);
+      box-shadow:
+        10px 20px 50px rgba(0,0,0,0.2),
+        inset 0 2px 8px rgba(255,255,255,0.3);
+    }
+
+    /* Text elements */
+    .top-label {
+      position: absolute;
+      top: 64px;
+      left: 72px;
+      right: 72px;
+    }
+
+    .eyebrow-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 240, 0.65);
+      margin-bottom: 14px;
+    }
+
+    .headline-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 58px;
+      font-weight: 300;
+      color: rgba(255, 255, 240, 0.92);
+      line-height: 1.1;
+    }
+
+    .headline-text em {
+      font-style: italic;
+    }
+
+    .bottom-label {
+      position: absolute;
+      bottom: 64px;
+      left: 72px;
+      right: 72px;
+    }
+
+    .tagline {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 240, 0.7);
+      margin-bottom: 16px;
+    }
+
+    .product-name-bottom {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 240, 0.55);
+    }
+
+    /* Decorative vertical line */
+    .vert-line {
+      position: absolute;
+      top: 160px;
+      right: 72px;
+      width: 1px;
+      height: 140px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,240,0.3), transparent);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="light-blob-1"></div>
+  <div class="light-blob-2"></div>
+  <div class="vert-line"></div>
+
+  <!-- Device -->
+  <div class="device-wrapper">
+    <div class="device-body">
+      <div class="device-screen">
+        <div class="screen-glow"></div>
+      </div>
+      <div class="device-button">
+        <div class="device-logo">P</div>
+      </div>
+    </div>
+    <div class="hand-wrap">
+      <div class="hand-shape"></div>
+    </div>
+  </div>
+
+  <div class="top-label">
+    <div class="eyebrow-text">Purethic · Detox Ritual</div>
+    <div class="headline-text">PurePore™<br><em>Professional</em><br><em>Detox</em></div>
+  </div>
+
+  <div class="bottom-label">
+    <div class="tagline">Purity beyond the surface.</div>
+    <div class="product-name-bottom">Blackhead Remover · Deep Pore Cleaner</div>
+  </div>
+</body>
+</html>

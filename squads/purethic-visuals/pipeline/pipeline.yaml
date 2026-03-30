@@ -1,0 +1,8 @@
+name: purethic-visuals-pipeline
+description: Pipeline de geração, conversão e upload de imagens para a loja Purethic
+steps:
+  - squads/purethic-visuals/pipeline/steps/step-01-gerador.md
+  - squads/purethic-visuals/pipeline/steps/step-02-conversor.md
+  - squads/purethic-visuals/pipeline/steps/step-03-uploader.md
+checkpoints:
+  - step-03-uploader

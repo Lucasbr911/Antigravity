@@ -1,0 +1,13 @@
+{
+  "squad": "purethic-visuals",
+  "status": "running",
+  "step": { "current": 1, "total": 3, "label": "step-01-gerador" },
+  "agents": [
+    { "id": "gerador", "name": "Nico", "icon": "🖼️", "status": "working", "deliverTo": null, "desk": { "col": 1, "row": 1 } },
+    { "id": "conversor", "name": "Mia", "icon": "⚙️", "status": "idle", "deliverTo": null, "desk": { "col": 2, "row": 1 } },
+    { "id": "uploader", "name": "Rafael", "icon": "🚀", "status": "idle", "deliverTo": null, "desk": { "col": 3, "row": 1 } }
+  ],
+  "handoff": null,
+  "startedAt": "2026-03-21T19:08:55Z",
+  "updatedAt": "2026-03-21T19:08:55Z"
+}

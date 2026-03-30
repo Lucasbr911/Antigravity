@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purethic Lab | Performance Dashboard</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #000000;
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --critical: #ff3e3e;
+            --important: #ffb443;
+            --suggestion: #00e676;
+            --text-heading: #ffffff;
+            --text-body: #ffffff;
+            --accent: #d4af37; /* Luxe Gold */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-body);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at top right, rgba(212, 175, 55, 0.05), transparent 600px),
+                radial-gradient(circle at bottom left, rgba(255, 62, 62, 0.05), transparent 600px);
+        }
+
+        header {
+            padding: 60px 5% 40px;
+            text-align: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--text-heading);
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .subtitle {
+            font-weight: 300;
+            letter-spacing: 0.5rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5% 100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .column-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        .column-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text-heading);
+        }
+
+        .task-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 15px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .task-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: currentColor;
+            opacity: 0.7;
+        }
+
+        .task-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .task-id {
+            font-size: 0.8rem;
+            font-weight: 700;
+            opacity: 0.5;
+            margin-bottom: 10px;
+        }
+
+        .task-title {
+            color: inherit;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .task-desc {
+            color: #ffffff;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .status-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .checkbox-container {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .task-card.completed {
+            opacity: 0.5;
+            filter: grayscale(0.5);
+        }
+
+        .task-card.completed .checkbox-container {
+            background: currentColor;
+            border-color: transparent;
+        }
+
+        .task-card.completed .checkbox-container::after {
+            content: '✓';
+            color: var(--bg-dark);
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .task-card.completed .task-title {
+            text-decoration: line-through;
+        }
+
+        /* Tiers */
+        .tier-critical {
+            color: var(--critical);
+        }
+
+        .tier-important {
+            color: var(--important);
+        }
+
+        .tier-suggestion {
+            color: var(--suggestion);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .task-card {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .stats-bar {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 15px 40px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            gap: 40px;
+            z-index: 100;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: var(--text-heading);
+        }
+
+        @media (max-width: 900px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                width: 90%;
+                gap: 20px;
+                padding: 15px 20px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">Purethic Lab</div>
+        <div class="subtitle">Operational Roadmap & Audit Dashboard</div>
+    </header>
+
+    <main id="dashboard">
+        <!-- Columns will be injected by JS -->
+    </main>
+
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span>Progresso Total:</span>
+            <span class="stat-value" id="overall-progress">0%</span>
+        </div>
+        <div class="stat-item">
+            <span class="dot" style="background: var(--critical); box-shadow: 0 0 10px var(--critical);"></span>
+            <span>Críticos:</span>
+            <span class="stat-value" id="critical-count">0/4</span>
+        </div>
+        <div class="stat-item">
+            <span class="dot" style="background: var(--important); box-shadow: 0 0 10px var(--important);"></span>
+            <span>Importantes:</span>
+            <span class="stat-value" id="important-count">0/4</span>
+        </div>
+    </div>
+
+    <script>
+        const tasks = [
+            { id: 1, tier: 'critical', title: 'Limpeza Wix Proativa', desc: 'Remover ou ocultar "Blue Bloods Beard Balm" via Wix API para manter o brand equity.' },
+            { id: 2, tier: 'critical', title: 'Profissionalização do Suporte', desc: 'Substituir supportpurethic@gmail.com por um e-mail corporativo mandatório.' },
+            { id: 3, tier: 'critical', title: 'Localização Britânica', desc: 'Atualizar slugs genéricos (ex: /mais-vendidos para /best-sellers).' },
+            { id: 4, tier: 'critical', title: 'Implementação de Nova Hero Copy', desc: 'Aplicar "Curated Beauty. Uncompromising Results." no banner principal.' },
+
+            { id: 5, tier: 'important', title: 'Rebranding Criativo', desc: 'Substituir as imagens de stock da Wix pelos novos visuais gerados via IA.' },
+            { id: 6, tier: 'important', title: 'Elevação do Revitaleyes', desc: 'Implementar o ritual "Revitaleyes® Sanctuary" para justificar o ticket de £145.' },
+            { id: 7, tier: 'important', title: 'SEO On-Page', desc: 'Atualizar todas as Title Tags e Meta Descriptions conforme o mapeamento.' },
+            { id: 8, tier: 'important', title: 'Fluxos de E-mail', desc: 'Ativar o Welcome Flow "A Sanctuary Awaits" e Carrinho Abandonado.' },
+
+            { id: 9, tier: 'suggestion', title: 'Science-backed Evidence', desc: 'Adicionar seções de "The Science behind the Glow" e buscar selos de pureza.' },
+            { id: 10, tier: 'suggestion', title: 'Membership Area', desc: 'Implementar a assinatura "The Conscious Glow" para garantir recorrência.' },
+            { id: 11, tier: 'suggestion', title: 'Social Proof (UK)', desc: 'Coletar e destacar 5 depoimentos de influenciadoras de luxo em Londres.' }
+        ];
+
+        const tiers = {
+            critical: { title: '🔴 Crítico', color: 'var(--critical)' },
+            important: { title: '🟡 Importante', color: 'var(--important)' },
+            suggestion: { title: '🟢 Sugestão', color: 'var(--suggestion)' }
+        };
+
+        let completionState = JSON.parse(localStorage.getItem('purethic_tasks')) || {};
+
+        function renderDashboard() {
+            const dashboard = document.getElementById('dashboard');
+            dashboard.innerHTML = '';
+
+            Object.keys(tiers).forEach(tierKey => {
+                const col = document.createElement('div');
+                col.className = 'column';
+                col.innerHTML = `
+                    <div class="column-header">
+                        <span class="dot tier-${tierKey}"></span>
+                        <span class="column-title" style="color: ${tiers[tierKey].color}">${tiers[tierKey].title}</span>
+                    </div>
+                `;
+
+                tasks.filter(t => t.tier === tierKey).forEach((task, index) => {
+                    const isCompleted = completionState[task.id];
+                    const card = document.createElement('div');
+                    card.className = `task-card tier-${tierKey} ${isCompleted ? 'completed' : ''}`;
+                    card.style.animationDelay = `${index * 0.1}s`;
+                    card.innerHTML = `
+                        <div class="task-id">TASK #0${task.id}</div>
+                        <div class="task-title">${task.title}</div>
+                        <div class="task-desc">${task.desc}</div>
+                        <div class="status-container">
+                            <span style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase;">Finalizar</span>
+                            <div class="checkbox-container"></div>
+                        </div>
+                    `;
+                    card.onclick = () => toggleTask(task.id);
+                    col.appendChild(card);
+                });
+
+                dashboard.appendChild(col);
+            });
+
+            updateStats();
+        }
+
+        function toggleTask(id) {
+            completionState[id] = !completionState[id];
+            localStorage.setItem('purethic_tasks', JSON.stringify(completionState));
+            renderDashboard();
+        }
+
+        function updateStats() {
+            const total = tasks.length;
+            const completed = Object.values(completionState).filter(v => v === true).length;
+            const progress = Math.round((completed / total) * 100);
+
+            document.getElementById('overall-progress').innerText = `${progress}%`;
+
+            const criticalTotal = tasks.filter(t => t.tier === 'critical').length;
+            const criticalDone = tasks.filter(t => t.tier === 'critical' && completionState[t.id]).length;
+            document.getElementById('critical-count').innerText = `${criticalDone}/${criticalTotal}`;
+
+            const importantTotal = tasks.filter(t => t.tier === 'important').length;
+            const importantDone = tasks.filter(t => t.tier === 'important' && completionState[t.id]).length;
+            document.getElementById('important-count').innerText = `${importantDone}/${importantTotal}`;
+        }
+
+        renderDashboard();
+    </script>
+</body>
+
+</html>

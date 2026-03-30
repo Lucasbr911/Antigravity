@@ -1,0 +1,9 @@
+name: purethic-visuals
+description: Squad que lê os prompts criativos da Carol (purethic-audit), cria imagens em HTML renderizadas via Playwright (alta qualidade pixel-perfect), converte para .webp e sobe no Wix.
+icon: 🖼️
+mode: Alta Performance
+data:
+  - squads/purethic-audit/output/2026-03-21-175510/v1/step-06-criativo.md
+skills:
+  - image-creator
+  - wix-image-uploader

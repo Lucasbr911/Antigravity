@@ -1,0 +1,23 @@
+{
+  "squad": "purethic-audit",
+  "status": "completed",
+  "step": { "current": 7, "total": 7, "label": "step-07-revisor" },
+  "agents": [
+    { "id": "auditor", "name": "Alana", "icon": "🕵️‍♂️", "status": "done", "deliverTo": null, "desk": { "col": 1, "row": 1 } },
+    { "id": "copywriter", "name": "Camila", "icon": "✍️", "status": "done", "deliverTo": null, "desk": { "col": 2, "row": 1 } },
+    { "id": "seo", "name": "Sabrina", "icon": "🔍", "status": "done", "deliverTo": null, "desk": { "col": 3, "row": 1 } },
+    { "id": "pesquisador", "name": "Tayla", "icon": "🔬", "status": "done", "deliverTo": null, "desk": { "col": 1, "row": 2 } },
+    { "id": "marketing", "name": "Milena", "icon": "📈", "status": "done", "deliverTo": null, "desk": { "col": 2, "row": 2 } },
+    { "id": "criativo", "name": "Carol", "icon": "🎨", "status": "done", "deliverTo": null, "desk": { "col": 3, "row": 2 } },
+    { "id": "revisor", "name": "Raquel", "icon": "📋", "status": "done", "deliverTo": null, "desk": { "col": 1, "row": 3 } }
+  ],
+  "handoff": {
+    "from": "criativo",
+    "to": "revisor",
+    "message": "Imagens e prompts prontos. Raquel, a bola está com você para organizar as prioridades e entregar o Roadmap final ao Lucas.",
+    "completedAt": "2026-03-21T18:10:00Z"
+  },
+  "startedAt": "2026-03-21T17:55:10Z",
+  "updatedAt": "2026-03-21T18:12:00Z",
+  "completedAt": "2026-03-21T18:12:00Z"
+}

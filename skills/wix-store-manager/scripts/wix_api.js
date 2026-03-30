@@ -19,6 +19,7 @@ try {
   // .env not found or unreadable, ignore
 }
 
+// Emprega a API V3 (Catalog V3) da Wix, o formato de chamadas mais atual para Wix Stores
 const API_URL = "www.wixapis.com";
 const WIX_SITE_ID = process.env.WIX_SITE_ID || "";
 const AUTHORIZATION = process.env.WIX_API_KEY || "";
@@ -29,19 +30,25 @@ function getHeaders() {
     process.exit(1);
   }
   return {
-    "Authorization": AUTHORIZATION,
+    "Authorization": AUTHORIZATION.startsWith('Bearer') ? AUTHORIZATION : 'Bearer ' + AUTHORIZATION,
     "Content-Type": "application/json",
     "wix-site-id": WIX_SITE_ID
   };
 }
 
 function makeRequest(path, method, data = null) {
+  // Fix bearer token for IST tokens if not prefixed
+  const headers = getHeaders();
+  if (headers["Authorization"].includes("IST.") && headers["Authorization"].startsWith("Bearer ")) {
+    headers["Authorization"] = headers["Authorization"].replace("Bearer ", "");
+  }
+
   return new Promise((resolve, reject) => {
     const options = {
       hostname: API_URL,
       path: path,
       method: method,
-      headers: getHeaders()
+      headers: headers
     };
 
     const req = https.request(options, (res) => {
@@ -71,7 +78,7 @@ function makeRequest(path, method, data = null) {
 
 async function listProducts() {
   try {
-    const response = await makeRequest('/stores/v1/products/query', 'POST', { query: { paging: { limit: 100 } } });
+    const response = await makeRequest('/stores/v3/products/query', 'POST', { query: { paging: { limit: 100 } } });
     console.log(JSON.stringify(response, null, 2));
   } catch (e) {
     console.error(e);
@@ -80,8 +87,14 @@ async function listProducts() {
 
 async function getProduct(productId) {
   try {
-    const response = await makeRequest(`/stores/v1/products/${productId}`, 'GET');
-    console.log(JSON.stringify(response, null, 2));
+    // Para obter 1 produto, podemos consultar pela query ou route V3
+    const payload = { query: { filter: { id: { $in: [productId] } }, paging: { limit: 1 } } };
+    const response = await makeRequest('/stores/v3/products/query', 'POST', payload);
+    if (response.products && response.products.length > 0) {
+      console.log(JSON.stringify(response.products[0], null, 2));
+    } else {
+      console.log(`Produto ${productId} não encontrado.`);
+    }
   } catch (e) {
     console.error(e);
   }
@@ -90,11 +103,12 @@ async function getProduct(productId) {
 async function updateProduct(productId, jsonFile) {
   try {
     const payload = JSON.parse(fs.readFileSync(jsonFile, 'utf8'));
-    const response = await makeRequest(`/stores/v1/products/${productId}`, 'PATCH', payload);
+    // Endpoint para V3 Update é PATCH /stores/v3/products/{id}
+    const response = await makeRequest(`/stores/v3/products/${productId}`, 'PATCH', payload);
     console.log("Produto atualizado com sucesso!");
     console.log(JSON.stringify(response, null, 2));
   } catch (e) {
-    console.error(`Erro: ${e.message || e}`);
+    console.error(`Erro ao atualizar: ${e.message || e}`);
   }
 }
 

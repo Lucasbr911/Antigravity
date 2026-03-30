@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1080px;
+      height: 1080px;
+      overflow: hidden;
+      background: #FAFAF8;
+      font-family: 'Inter', sans-serif;
+      position: relative;
+    }
+
+    .bg-gradient {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, #FFFFF0 0%, #FDF5F5 45%, #F7EEE8 100%);
+    }
+
+    /* Decorative circles */
+    .deco-ring-outer {
+      position: absolute;
+      width: 820px;
+      height: 820px;
+      border-radius: 50%;
+      border: 1px solid rgba(178, 172, 136, 0.18);
+      top: 130px;
+      left: 130px;
+    }
+
+    .deco-ring-inner {
+      position: absolute;
+      width: 640px;
+      height: 640px;
+      border-radius: 50%;
+      border: 1px solid rgba(178, 172, 136, 0.25);
+      top: 220px;
+      left: 220px;
+    }
+
+    /* Hero composition */
+    .patch-wrapper {
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      top: 300px;
+      left: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Patch shape - organic eye-like */
+    .patch-shape {
+      width: 420px;
+      height: 180px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #D4C5A0 0%, #C4A882 30%, #B2AC88 70%, #9E9B7A 100%);
+      box-shadow:
+        0 20px 60px rgba(178, 172, 136, 0.35),
+        0 8px 20px rgba(0,0,0,0.08),
+        inset 0 2px 8px rgba(255,255,255,0.25);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .patch-texture {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 4px,
+        rgba(255,255,255,0.06) 4px,
+        rgba(255,255,255,0.06) 8px
+      );
+    }
+
+    .patch-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 240, 0.9);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Second patch - slightly lifted */
+    .patch-shape-2 {
+      width: 380px;
+      height: 155px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #E8D9BE 0%, #D4C5A0 50%, #C4A882 100%);
+      box-shadow:
+        0 12px 40px rgba(178, 172, 136, 0.25),
+        0 4px 12px rgba(0,0,0,0.06),
+        inset 0 2px 6px rgba(255,255,255,0.3);
+      position: absolute;
+      top: 240px;
+      left: 350px;
+      transform: rotate(-4deg);
+    }
+
+    /* Top content */
+    .top-content {
+      position: absolute;
+      top: 64px;
+      left: 72px;
+      right: 72px;
+    }
+
+    .product-tag {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #B2AC88;
+      margin-bottom: 14px;
+    }
+
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 300;
+      color: #2C2C2C;
+      line-height: 1.1;
+    }
+
+    .product-name em {
+      font-style: italic;
+      color: #B2AC88;
+    }
+
+    /* Bottom content */
+    .bottom-content {
+      position: absolute;
+      bottom: 64px;
+      left: 72px;
+      right: 72px;
+    }
+
+    .benefit-row {
+      display: flex;
+      gap: 32px;
+      margin-bottom: 24px;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: #7A7A72;
+      letter-spacing: 0.06em;
+    }
+
+    .benefit-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #B2AC88;
+      flex-shrink: 0;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 400;
+      color: #2C2C2C;
+    }
+
+    .price-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: #9A9A92;
+      letter-spacing: 0.06em;
+    }
+
+    /* Accent elements */
+    .gold-accent {
+      position: absolute;
+      top: 180px;
+      right: 80px;
+      width: 1px;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, #B2AC88, transparent);
+    }
+
+    .star {
+      position: absolute;
+      top: 164px;
+      right: 74px;
+      width: 13px;
+      height: 13px;
+      color: #B2AC88;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-gradient"></div>
+  <div class="deco-ring-outer"></div>
+  <div class="deco-ring-inner"></div>
+
+  <!-- Product patches -->
+  <div class="patch-wrapper">
+    <div class="patch-shape">
+      <div class="patch-texture"></div>
+      <div class="patch-label">Revitaleyes®</div>
+    </div>
+    <div class="patch-shape-2"></div>
+  </div>
+
+  <div class="gold-accent"></div>
+  <div class="star">✦</div>
+
+  <div class="top-content">
+    <div class="product-tag">Purethic · Eye Ritual</div>
+    <div class="product-name">Revitaleyes®<br><em>Sanctuary Patches</em></div>
+  </div>
+
+  <div class="bottom-content">
+    <div class="benefit-row">
+      <div class="benefit-item">
+        <div class="benefit-dot"></div>
+        Instant Depuff
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-dot"></div>
+        Gold Infused
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-dot"></div>
+        Clinical Grade
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-dot"></div>
+        Ethically Sourced
+      </div>
+    </div>
+    <div class="price-row">
+      <div class="price">£145</div>
+      <div class="price-desc">· Under Eye Ritual · 30 Pairs</div>
+    </div>
+  </div>
+</body>
+</html>

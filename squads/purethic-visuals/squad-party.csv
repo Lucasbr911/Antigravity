@@ -1,0 +1,4 @@
+id,name,title,icon,path
+squads/purethic-visuals/agents/gerador,Nico,Gerador de Imagens,🖼️,./agents/gerador.agent.md
+squads/purethic-visuals/agents/conversor,Mia,Conversora de Formatos,⚙️,./agents/conversor.agent.md
+squads/purethic-visuals/agents/uploader,Rafael,Uploader Wix,🚀,./agents/uploader.agent.md
